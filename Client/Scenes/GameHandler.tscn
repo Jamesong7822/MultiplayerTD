@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scenes/GameHandler.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/WaveHandler.tscn" type="PackedScene" id=2]
+
+[node name="GameHandler" type="Node"]
+script = ExtResource( 1 )
+MAP = "res://Scenes/Maps/BaseMap.tscn"
+WAVES = [ {
+} ]
+
+[node name="WaveHandler" parent="." instance=ExtResource( 2 )]

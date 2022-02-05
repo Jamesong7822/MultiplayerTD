@@ -8,10 +8,43 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Resource",
+"class": "subWaveResource",
+"language": "GDScript",
+"path": "res://Scenes/Enemies/subWaveResource.gd"
+}, {
+"base": "Resource",
+"class": "subWaves",
+"language": "GDScript",
+"path": "res://subWaves.gd"
+} ]
+_global_script_class_icons={
+"subWaveResource": "",
+"subWaves": ""
+}
+
 [application]
 
 config/name="MultiplayerTDClient"
+run/main_scene="res://Scenes/MainHandler.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[global]
+
+display=false
+
+[layer_names]
+
+2d_physics/layer_1="Environment"
+2d_physics/layer_2="Enemies"
 
 [physics]
 
@@ -19,4 +52,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+2d/snapping/use_gpu_pixel_snap=true
 environment/default_environment="res://default_env.tres"
