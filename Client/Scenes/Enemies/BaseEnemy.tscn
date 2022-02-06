@@ -1,14 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Enemies/Infantry.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Enemies/BaseEnemy.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Enemies/DamageEffect.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/UI/HealthBar.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/UI/HealthBar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 
 [node name="BaseEnemy" type="PathFollow2D"]
 loop = false
 script = ExtResource( 2 )
-speed = 100.0
+speed = 50.0
 health = 100.0
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -21,3 +24,8 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 shape = SubResource( 1 )
+
+[node name="DamageEffect" parent="." instance=ExtResource( 3 )]
+
+[node name="HealthBar" parent="." instance=ExtResource( 5 )]
+script = ExtResource( 4 )

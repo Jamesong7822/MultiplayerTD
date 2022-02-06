@@ -14,6 +14,7 @@ var canShoot = true
 
 func _ready() -> void:
 	pass
+	$AnimationPlayer.play("RESET")
 	loadTowerStats()
 	
 func _process(delta: float) -> void:
@@ -43,11 +44,21 @@ func selectTarget():
 func aim():
 	# turn to look at target
 	if not target:
-		# look at the mousepos
-		var mousePos = get_viewport().get_mouse_position()
-		$Turret.look_at(mousePos)
+		# randomly rotate
+		if $RandomLookAtTimer.is_stopped():
+			$RandomLookAtTimer.start()
 		return
-	$Turret.look_at(target.global_position)
+	else:
+		# target exists!
+		$RandomLookAtTimer.stop()
+	if not $AnimationPlayer.is_playing():
+		$Turret.look_at(target.global_position)
+		
+func lookAtRandomAngle() -> void:
+	var randomAngle = (randf()*2-1)*PI
+	$Tween.interpolate_property($Turret, "rotation", 
+		$Turret.rotation, randomAngle, 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
 	
 func shoot():
 	# shoot
@@ -59,6 +70,7 @@ func shoot():
 		canShoot = false
 		target.takeDamage(damage)
 		$ReloadTimer.start()
+		$AnimationPlayer.play("fire")
 
 func _on_Range_body_entered(body: Node) -> void:
 	pass # Replace with function body.
@@ -73,3 +85,8 @@ func _on_Range_body_exited(body: Node) -> void:
 func _on_ReloadTimer_timeout() -> void:
 	pass # Replace with function body.
 	canShoot = true
+
+
+func _on_RandomLookAtTimer_timeout() -> void:
+	pass # Replace with function body.
+	lookAtRandomAngle()
