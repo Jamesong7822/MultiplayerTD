@@ -4,7 +4,8 @@ export (String, FILE) var MAP
 export (Array, Dictionary) var WAVES
 
 var map
-var currentWave = 0
+var buildMode = false
+var buildTowerScene
 
 func setMapScene(newMapScene: String) -> void:
 	map = load(newMapScene).instance()
@@ -13,12 +14,30 @@ func setMapScene(newMapScene: String) -> void:
 	
 func _ready() -> void:
 	setMapScene(MAP)
-#	yield(get_tree().create_timer(2), "timeout")
-#	sendWave([{"scene": "res://Scenes/Enemies/BaseEnemy.tscn"}])
-
-#func sendWave(waveInformation: Array):
-#	currentWave += 1
-#	for seq in waveInformation:
-#		var e = seq["scene"]
-#		map.addEnemy(e)
+	
+func _start() -> void:
+	$WaveHandler._startWave()
+	
+func _physics_process(delta: float) -> void:
+	if buildMode:
+		pass
+		
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and buildMode:
+		_exitBuildMode()
+	if event.is_action_pressed("left_click") and buildMode:
+		var built = buildTowerScene.placeTower()
+		if built:
+			_exitBuildMode()
+	
+func _enterBuildMode(towerScene:PackedScene) -> void:
+	if not buildMode:
+		buildMode = true
+		buildTowerScene = towerScene.instance()
+		map.addTower(buildTowerScene)
+	
+func _exitBuildMode() -> void:
+	buildMode = false
+	if not buildTowerScene.built:
+		buildTowerScene.queue_free()
 	

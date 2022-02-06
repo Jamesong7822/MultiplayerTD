@@ -10,6 +10,7 @@ var currentPathFocus = 0
 
 
 signal waveComplete
+signal updateHUD
 
 # custom CB function to edit the waveManager array size!
 func set_WaveManager(value):
@@ -23,7 +24,12 @@ func set_WaveManager(value):
 func _ready():
 	numWaves = WaveManager.size()
 	connect("waveComplete", self, "on_wave_complete")
-	yield(get_tree().create_timer(3),"timeout")
+#	yield(get_tree().create_timer(3),"timeout")
+#	var waveData = getWaveData()
+#	if waveData:
+#		spawnWave(waveData)
+
+func _startWave() -> void:
 	var waveData = getWaveData()
 	if waveData:
 		spawnWave(waveData)
@@ -79,4 +85,4 @@ func spawnUnit(enemy):
 	
 func on_wave_complete() -> void:
 	currentWave += 1
-	
+	emit_signal("updateHUD", currentWave)

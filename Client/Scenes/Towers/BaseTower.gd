@@ -9,7 +9,8 @@ export (TOWER_TYPES) var towerType
 
 var enemiesInRange = []
 var target
-
+var canBeBuilt = true
+var built = false
 var canShoot = true
 
 func _ready() -> void:
@@ -18,13 +19,33 @@ func _ready() -> void:
 	loadTowerStats()
 	
 func _process(delta: float) -> void:
-	selectTarget()
-	aim()
-	shoot()
+	if built:
+		selectTarget()
+		aim()
+		shoot()
+	else:
+		checkIfTowerCanBeBuilt()
+		
 
 func loadTowerStats():
 	# load from autoload
 	pass
+	
+func checkIfTowerCanBeBuilt() -> void:
+	position = get_viewport().get_mouse_position()
+	if canBeBuilt:
+		modulate = Color(0,1,0)
+	else:
+		modulate = Color(1,0,0)
+	
+	
+func placeTower() -> bool:
+	print ("Place tower!")
+	if canBeBuilt:
+		built = true
+		modulate = Color(1,1,1,1)
+	return built
+
 	
 func selectTarget():
 	# get the furthest enemy on the track
@@ -90,3 +111,12 @@ func _on_ReloadTimer_timeout() -> void:
 func _on_RandomLookAtTimer_timeout() -> void:
 	pass # Replace with function body.
 	lookAtRandomAngle()
+
+
+func _on_BaseArea_body_entered(body: Node) -> void:
+	pass # Replace with function body.
+	canBeBuilt = false
+
+func _on_BaseArea_body_exited(body: Node) -> void:
+	pass # Replace with function body.
+	canBeBuilt = true

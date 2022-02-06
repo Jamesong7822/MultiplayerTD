@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/WaveHandler.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/Enemies/subWaveResource.gd" type="Script" id=2]
-[ext_resource path="res://subWaves.gd" type="Script" id=3]
+[ext_resource path="res://subWave.gd" type="Script" id=3]
 
 [sub_resource type="Resource" id=1]
 resource_name = "Group 1"
@@ -19,6 +19,36 @@ resource_name = "wave 1"
 script = ExtResource( 3 )
 subWavesManager = [ SubResource( 1 ) ]
 
+[sub_resource type="Resource" id=3]
+resource_name = "Group 1"
+script = ExtResource( 2 )
+numSubWaves = 5
+enemyType = 0
+subWaveSize = 3
+spawnSpacing = 0.0
+subWaveSpacing = 2.0
+postSubWaveSpacing = 2.0
+
+[sub_resource type="Resource" id=4]
+resource_name = "wave 2"
+script = ExtResource( 3 )
+subWavesManager = [ SubResource( 3 ) ]
+
+[sub_resource type="Resource" id=5]
+resource_name = "Group 1"
+script = ExtResource( 2 )
+numSubWaves = 1
+enemyType = 0
+subWaveSize = 10
+spawnSpacing = 1.0
+subWaveSpacing = 0.0
+postSubWaveSpacing = 2.0
+
+[sub_resource type="Resource" id=6]
+resource_name = "wave 3"
+script = ExtResource( 3 )
+subWavesManager = [ SubResource( 5 ) ]
+
 [node name="WaveHandler" type="Node"]
 script = ExtResource( 1 )
-WaveManager = [ SubResource( 2 ) ]
+WaveManager = [ SubResource( 2 ), SubResource( 4 ), SubResource( 6 ) ]

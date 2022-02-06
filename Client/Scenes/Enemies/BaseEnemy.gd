@@ -14,6 +14,8 @@ signal reachEnd(damage)
 
 func _ready() -> void:
 	pass
+	# randomize the voffset
+	v_offset = 10*(randf()*2-1)
 	$HealthBar.set_as_toplevel(true)
 	currentHealth = health
 	# TODO: level scaling
